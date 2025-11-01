@@ -46,6 +46,7 @@ struct ContentView: View {
                             Text(predator.type.rawValue.capitalized)
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.white)
                                 .padding(.horizontal,13)
                                 .padding(.vertical, 5)
                                 .background(predator.type.background)

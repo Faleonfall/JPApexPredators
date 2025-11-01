@@ -13,6 +13,8 @@ struct PredatorDetail: View {
     
     @State var position: MapCameraPosition
     
+    @Namespace var namespace
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -47,11 +49,8 @@ struct PredatorDetail: View {
                         .font(.largeTitle)
                     
                     // Location
-                    NavigationLink {
-                        PredatorMap(position: .camera(MapCamera(centerCoordinate: predator.location, distance: 1000, heading: 250, pitch: 80)))
-                            .preferredColorScheme(.dark)
-                    } label: {
-                        Map(position: $position) {
+                    ZStack {
+                        Map(position: $position, interactionModes: []) {
                             Annotation(predator.name, coordinate: predator.location) {
                                 Image(systemName: "mappin.and.ellipse")
                                     .font(.largeTitle)
@@ -64,12 +63,35 @@ struct PredatorDetail: View {
                         .clipShape(.rect(cornerRadius: 15))
                         .overlay(alignment: .topLeading) {
                             Text("Current Location")
+                                .foregroundStyle(.white)
+                                .font(.subheadline)
+                                .padding(.top, 3)
                                 .padding([.leading, .bottom], 5)
                                 .padding(.trailing, 8)
                                 .background(.black.opacity(0.33))
                                 .clipShape(.rect(bottomTrailingRadius: 15))
                         }
-                        .clipShape(.rect(cornerRadius: 15))
+                        .overlay(alignment: .trailing) {
+                            Image(systemName: "greaterthan")
+                                .imageScale(.large)
+                                .padding(.trailing, 5)
+                                .font(.title3)
+                        }
+                        
+                        // Invisible NavigationLink overlay
+                        NavigationLink {
+                            PredatorMap(position: .camera(MapCamera(
+                                centerCoordinate: predator.location,
+                                distance: 1000,
+                                heading: 250,
+                                pitch: 80
+                            )))
+                            .preferredColorScheme(.dark)
+                            .navigationTransition(.zoom(sourceID: 1, in: namespace))
+                        } label: {
+                            Color.clear
+                        }
+                        .matchedTransitionSource(id: 1, in: namespace)
                     }
                     
                     // Appearance
