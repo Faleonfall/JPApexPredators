@@ -18,8 +18,7 @@ Browse detailed profiles, see where they lived on the map, and filter species by
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8a88c083-058f-4b0a-a9fa-0a36aaaac8ee"
        alt="App Screenshot"
-       width="300"
-       style="border-radius:12px"/>
+       width="300"/>
 </p>
 
 ---
